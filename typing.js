@@ -51,7 +51,7 @@ function gameOver(){
 
 }
 
-document.getElementById('game').addEventListener('keyup', e => {
+document.getElementById('game').addEventListener('keydown', e => {
     const key = e.key;
     const currentWord = document.querySelector('.word.current');
     const currentLetter = document.querySelector('.letter.current');
