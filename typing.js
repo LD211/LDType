@@ -1,6 +1,6 @@
-const words = 'the be of and a to in he have it that for they with as not on she at by this we you do but from or which one would all will there say who make when can more if no man out other so what time up go about than into could state only new year some take come these know see use get like then first any work now may such give over think most even find day also after way many must look before great back through long where much should well people down own just because good each those feel seem how high too place little world very still nation hand old life tell write become here show house both between need mean call develop under last right move thing general school never same another begin while number part turn real leave might want point form off child few small since against ask late home interest large person end open public follow during present without again hold govern around possible head consider word program problem however lead system set order eye plan run keep face fact group play stand increase early course change help line '.split(' ');
+const words = 'the be of and a to in he have it that for they with as not on she at by this we you do but from or which one would all will there say who make when can more if no man out other so what time up go about than into could state only new year some take come these know see use get like then first any work now may such give over think most even find day also after way many must look before great back through long where much should well people down own just because good each those feel seem how high too place little world very still nation hand old life tell write become here show house both between need mean call develop under last right move thing general school never same another begin while number part turn real leave might want point form off child few small since against ask late home interest large person end open public follow during present without again hold govern around possible head consider word program problem however lead system set order eye plan run keep face fact group play stand increase early course change help line'.split(' ');
 const wordsCount = words.length;
-const gameTime = 30 *1000;
+const gameTime = 15 *1000;
 window.timer = null;
 window.gameStart = null;
 function addClass(el,name){
@@ -18,10 +18,13 @@ function formatWord(word){
     return `<div class="word"><span class="letter">${word.split('').join('</span><span class="letter">')}</span></div>`;
 }
 function newGame(){
+    gameKeys();
+    
     document.getElementById('words').innerHTML = '';
-    for(let i = 0; i<200; i++){
+    for(let i = 0; i<198; i++){
         document.getElementById('words').innerHTML += formatWord(randomWord());
     }
+    
     addClass(document.querySelector('.word'), 'current');
     addClass(document.querySelector('.letter'), 'current');
     document.getElementById('info').innerHTML = gameTime/1000 + '';
@@ -35,8 +38,10 @@ function getWpm(){
     const typedWords = words.slice(0,lastTypedWordIndex);
     const correctWords = typedWords.filter(word =>{
         const letters = [...word.children];
+        
         const incorrectLetters = letters.filter(letter=> letter.className.includes('incorrect'));
         const correctLetters = letters.filter(letter => letter.className.includes('correct'));
+        
         return incorrectLetters.length === 0 && correctLetters.length === letters.length;
 
     });
@@ -51,7 +56,9 @@ function gameOver(){
 
 }
 
-document.getElementById('game').addEventListener('keydown', e => {
+
+function gameKeys(){
+ document.getElementById('game').addEventListener('keydown', e => {
     const key = e.key;
     const currentWord = document.querySelector('.word.current');
     const currentLetter = document.querySelector('.letter.current');
@@ -153,9 +160,24 @@ document.getElementById('game').addEventListener('keydown', e => {
     cursor.style.top = (nextLetter || nextWord).getBoundingClientRect().top + 2 + 'px';
     cursor.style.left = (nextLetter || nextWord).getBoundingClientRect()[nextLetter ? 'left' : 'right'] + 'px';
     
+ });
+}
+document.getElementById('game').addEventListener('keydown', e => {
+    const key = e.key;
+    const tabButtonPress = key === 'Tab';
+    const enterButtonPress = key === 'Enter';
+    if(key === tabButtonPress){
+        if(key === enterButtonPress){
+            gameOver;
+            newGame;
+        }
+        if(key === !enterButtonPress){
+            return;
+        }
+    }
 });
 document.getElementById('newGameBtn').addEventListener('click',() =>{
-gameOver();
-newGame();
+ gameOver();
+ newGame();
 });
 newGame();

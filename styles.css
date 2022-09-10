@@ -54,8 +54,26 @@ div#game:focus{
    filter: blur(5px);
    color: var(--textSecondary);
 }
+@keyframes typing {
+    0%
+    {
+        width: 0;
+    }
+    50%
+    {
+        width: 13.5em;
+    }
+    100%
+    {
+        width: 0;
+    }
+    
+}
 #game:focus #words{
     filter:blur(0);
+    animation: typing 4s infinte,
+    hue_color 4s infinite alternate-reverse;
+    filter : hue-rotate(0deg);
 }
 #focus-error{
     position:absolute;
@@ -72,10 +90,12 @@ div.word{
     margin: 0 5px;
 }
 .letter.correct{
-    color: #fff;
+    color: rgb(133, 255, 139);
+    animation: hue_color 1s infinite alternate-reverse;
+    filter : hue-rotate(0deg);
 }
 .letter.incorrect{
-    color: #f55;
+    color: rgb(236, 43, 43);
 }
 @keyframes blink{
     0%{
@@ -89,15 +109,32 @@ div.word{
     }
 
 }
+
+@keyframes hue_color{
+    0%
+    {
+        filter: hue-rotate(180deg);
+    }
+    100%
+    {
+        filter: hue-rotate(360deg);
+    }
+}
 #cursor{
     display:none;
     width: 2px;
     height: 1.6rem;
     background: var(--primaryColor);
     position: fixed;
-    top: 175px;
-    left: 475px;
-    animation: blink 1s infinite;
+    overflow: hidden;
+    
+    animation: blink 1s infinite alternate-reverse,
+    typing 4s infinte,
+    hue_color 4s infinite alternate-reverse;
+    filter : hue-rotate(0deg);
+    
+    
+
 }
 
 #game:focus #cursor{
