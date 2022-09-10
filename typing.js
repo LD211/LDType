@@ -67,7 +67,10 @@ function gameKeys(){
     const isSpace = key === ' ';
     const isBackspace = key === 'Backspace';
     const isFirstLetter = currentLetter === currentWord.firstChild;
-
+    
+    var originalAudio = document.getElementById('audio');
+    originalAudio.load();
+    originalAudio.play();
     if(document.querySelector('#game.over')){
         return;
     }
@@ -93,6 +96,7 @@ function gameKeys(){
         }, 1000);
         
     }
+    
 
     if(isLetter){
         if(currentLetter){
